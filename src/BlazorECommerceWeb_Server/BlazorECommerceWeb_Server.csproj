@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\BlazorECommerceWeb_Shared\BlazorECommerceWeb_Shared.csproj" />
+  </ItemGroup>
+
 </Project>
