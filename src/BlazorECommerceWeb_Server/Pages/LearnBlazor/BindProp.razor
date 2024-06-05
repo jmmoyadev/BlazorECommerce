@@ -1,11 +1,15 @@
 ﻿@page "/learnblazor/bindprop"
 @using BlazorECommerceWeb_Shared
+@using System.Globalization
 
 <h3>Product</h3>
 <ul>
     <li>Id: @_product.Id</li>
     <li>Name: @_product.Name</li>
     <li>Is Active: @_product.IsActive</li>
+    <li>Price: @_product.Price.ToString("C2")</li>
+    <li>Price <input type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind-value="_product.Price" @bind-value:event="oninput" /></li>
+    <li>Price <input type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind="_product.Price" @bind:event="oninput" /></li>
 </ul>
 
 @code {
@@ -13,6 +17,7 @@
         {
             Id = 1,
             Name = "Rose Candle",
+            Price = 9.50m,
             IsActive = true
         };
 }
