@@ -1,0 +1,41 @@
+﻿@page "/learnBlazor/blazorJs"
+
+@inject IJSRuntime _jsRuntime
+
+<h3>BlazorJs</h3>
+
+
+<div class="row mb-3">
+    <div class="col-6">
+        <button class="btn btn-primary w-100" @onclick="TestConfirmBox">Test Confirm Button</button>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-6">
+        @if (_confirmResult.HasValue)
+        {
+            @if (_confirmResult.Value)
+            {
+                <span class=" d-block alert alert-success">Confirmation has been made!</span>
+            }
+            else
+            {
+                <span class=" d-block alert alert-warning">Confirmation pending!</span>
+            }
+        }
+    </div>
+
+</div>
+
+
+@code {
+    const string ConfirmMessage = "Are you sure you want to click?";
+
+    bool? _confirmResult = null;
+
+    async Task TestConfirmBox()
+    {
+        _confirmResult = await _jsRuntime.InvokeAsync<bool>("confirm", ConfirmMessage);
+    }
+}
