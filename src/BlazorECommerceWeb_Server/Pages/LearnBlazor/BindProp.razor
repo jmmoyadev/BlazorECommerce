@@ -1,9 +1,8 @@
 ﻿@page "/learnblazor/bindprop"
-@using BlazorECommerceWeb_Shared
-@using System.Globalization
+
 
 <h3>Product</h3>
-<ul style="list-style:none">
+<ul style="list-style:none; padding-left:0">
     <li>Id: @_product.Id</li>
     <li>Name: @_product.Name</li>
     <li>Is Active: @_product.IsActive</li>
@@ -13,14 +12,39 @@
     <li>&nbsp;</li>
     <li>This Product is: @(_product.IsActive ? "Active" : "Inactive")</li>
     <li>Active <input type="checkbox" @bind-value="@_product.IsActive" checked="@(_product.IsActive? "checked":null)" /></li>
+    <li>Property selected: @selectedProp</li>
+    <li>Property Value:
+        @if (!string.IsNullOrWhiteSpace(selectedProp))
+        {
+            @_product.Properties.FirstOrDefault(p => p.Key == selectedProp).Value
+        }
+    </li>
+
 </ul>
+<p>
+    Product Properties:
+    <select @bind="selectedProp">
+        @foreach (var prop in _product.Properties)
+        {
+            <option value="@prop.Key">@prop.Key</option>
+        }
+    </select>
+</p>
 
 @code {
+    private string selectedProp = "";
+
     Product _product = new()
         {
             Id = 1,
             Name = "Rose Candle",
             Price = 9.50m,
-            IsActive = true
+            IsActive = true,
+            Properties = new List<ProductProperty>()
+            {
+                new () { Id = 1, Key="Color", Value="Black"},
+                new () { Id = 2, Key="Flavor", Value="Rose Jasmine"},
+                new () { Id = 3, Key="Size", Value="20oz"},
+            }
         };
 }

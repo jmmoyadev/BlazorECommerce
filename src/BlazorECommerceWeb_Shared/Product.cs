@@ -12,5 +12,8 @@ namespace BlazorECommerceWeb_Shared
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }  
         public bool IsActive { get; set; }
+
+        public IEnumerable<ProductProperty> Properties { get; set; } = Enumerable.Empty<ProductProperty>();
+
     }
 }
