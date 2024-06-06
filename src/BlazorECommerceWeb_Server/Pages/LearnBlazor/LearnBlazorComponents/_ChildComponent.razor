@@ -24,13 +24,11 @@
     <button class="btn btn-danger" @onclick="OnButtonClicked">Button to be clicked</button>
     <br />
     <br />
-    <_GrandChildComponent MessageForGrandChild="@MessageForGrandChild"></_GrandChildComponent>
+    <_GrandChildComponent></_GrandChildComponent>
 </div>
 
 @code {
-    [Parameter]
-    public string MessageForGrandChild { get; set; }
-
+    
     [Parameter]
     public string Title { get; set; } = string.Empty;
 
