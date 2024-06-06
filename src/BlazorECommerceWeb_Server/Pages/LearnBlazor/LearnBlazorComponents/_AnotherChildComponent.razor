@@ -1,0 +1,15 @@
+﻿
+<div>
+    <h4>Another Child Component</h4>
+    <input id="name" placeholder="Child placeholder" @attributes="InputAttributes" />
+</div>
+
+@code {
+
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>()
+    {
+        { "maxlength", 5},
+    };
+}

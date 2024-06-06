@@ -6,19 +6,30 @@
                  OnButtonClicked="ShowMessage">
     <ChildContent>Render fragment from Parent! Woah!</ChildContent>
     <DangerChildContent>Danger child content</DangerChildContent>
-                 
 </_ChildComponent>
 
 
 <_ChildComponent title="This is second child component"
+                 MessageForGrandChild="This message is from your grand parent (ParentComponent) "
                  OnButtonClicked="ShowMessage">
 </_ChildComponent>
 
 <br />
-
 <p>@_messageText</p>
+<br />
+
+<_AnotherChildComponent placeholder="Enter your name from Parent"></_AnotherChildComponent>
+
+
 
 @code {
+
+    // public Dictionary<string, object> InputAttributesFromParent { get; set; } = new Dictionary<string, object>(){
+    //     { "required", "required"},
+    //     { "placeholder", "Enter your name from Parent" }
+    //     { "maxlength", 5},
+    // };
+
     string _messageText { get; set; } = string.Empty;
 
     void ShowMessage()
