@@ -46,5 +46,16 @@
 }
 ```` 
 
+## Components Lifecycle
+
+1. `OnInitialized`
+2. `OnInitializedAsync`
+3. `OnParametersSet`,
+4. `OnParametersSetAsync`
+5. `OnAfterRender(firstRender)`, 
+6. `OnAfterRenderAsync(firstRender)`
+
+
+
 
 

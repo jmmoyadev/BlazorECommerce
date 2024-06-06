@@ -1,7 +1,8 @@
 ﻿@page "/learnblazor/bindprop"
+@inject ILogger<BindProp> Logger
 
 <h2>Individual Product</h2>
-<div class="row">
+<div class="row mb-3">
     <div class="col-6 border p-3">
         <h3 class="text-primary">Product Playground</h3>
         <hr />
@@ -15,7 +16,7 @@
         <div class="mb-3">
             <label class="form-label">Product Properties:</label>
             <select class="form-select" @bind="selectedProp">
-                @foreach (var prop in _product.Properties)
+                @foreach (var prop in _product.ProductProperties)
                 {
                     <option value="@prop.Key">@prop.Key</option>
                 }
@@ -39,27 +40,145 @@
                 Property Value:
                 @if (!string.IsNullOrWhiteSpace(selectedProp))
                 {
-                    @_product.Properties.FirstOrDefault(p => p.Key == selectedProp).Value
+                    @_product.ProductProperties.FirstOrDefault(p => p.Key == selectedProp).Value
                 }
             </li>
 
         </ul>
     </div>
+
+
+
 </div>
+<div class="row mb-3">
+    <div class="col-12 border p-3">
+        <h2 class="text-primary">Product Table</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var prod in _productLists)
+                {
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" @bind-value="prod.Name" @bind-value:event="oninput" />
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind="prod.Price" @bind:event="oninput" />
+                        </td>
+                        <td>
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" @bind-value="@prod.IsActive" checked="@(prod.IsActive? "checked":null)">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 border p-3">
+        <h2 class="text-primary">Product Summary</h2>
+        @foreach (var prod in _productLists)
+        {
+            <p>@prod.Name - @prod.Price.ToString("C") - @prod.IsActive </p>
+        }
+    </div>
+</div>
+
+
+
 @code {
     private string selectedProp = "";
 
-    Product _product = new()
-        {
-            Id = 1,
-            Name = "Rose Candle",
-            Price = 9.50m,
-            IsActive = true,
-            Properties = new List<ProductProperty>()
+    Product _product = null!;
+    List<Product> _productLists = new();
+
+    protected override void OnInitialized()
+    {
+        Logger.LogWarning("Calling OnInitialized");
+
+        AddProducts();
+        _product = _productLists.FirstOrDefault() ?? new();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogWarning("Calling OnInitializedAsync");
+        await Task.CompletedTask;
+    }
+
+    protected override void OnParametersSet()
+    {
+        Logger.LogWarning("Calling OnParametersSet");
+        base.OnParametersSet();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        Logger.LogWarning("Calling OnParametersSetAsync");
+        await Task.CompletedTask;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Logger.LogWarning("Calling OnAfterRender. FirsRender: {FirsRender}", firstRender);
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Logger.LogWarning("Calling OnAfterRenderAsync. FirsRender: {FirsRender}", firstRender);
+        await Task.CompletedTask;
+    }
+
+
+    void AddProducts()
+    {
+        _productLists.Add(new()
+            {
+                Id = 1,
+                Name = "Rose Candle",
+                Price = 9.50m,
+                IsActive = true,
+                ProductProperties = new List<ProductProperty>()
             {
                 new () { Id = 1, Key="Color", Value="Black"},
                 new () { Id = 2, Key="Flavor", Value="Rose Jasmine"},
                 new () { Id = 3, Key="Size", Value="20oz"},
             }
-        };
+            });
+
+        _productLists.Add(new()
+            {
+                Id = 1,
+                Name = "Midnight Blaze",
+                IsActive = false,
+
+                Price = 10.99m,
+                ProductProperties = new List<ProductProperty>()
+                {
+                    new ProductProperty { Id = 1, Key = "Flavor", Value = "Rose"},
+                    new ProductProperty { Id = 2, Key = "Size", Value = "20oz"},
+                    new ProductProperty { Id = 3, Key = "Color", Value="Purple" }
+                }
+            });
+
+        _productLists.Add(new()
+            {
+                Id = 2,
+                Name = "Blossom Lily",
+                IsActive = true,
+                Price = 13.99m,
+                ProductProperties = new List<ProductProperty>()
+                {
+                    new ProductProperty { Id = 1, Key = "Flavor", Value = "Lily" },
+                    new ProductProperty { Id = 2, Key = "Size", Value = "18oz" },
+                    new ProductProperty { Id = 3,Key = "Color",Value = "White"}
+                }
+            });
+    }
 }
