@@ -2,18 +2,19 @@
 
 <h3>Parent/Child Relation</h3>
 
-<CascadingValue Value="@MessageForGrandChild">
-    <_ChildComponent title="This title is passed as parameter from parent component"
-                     OnButtonClicked="ShowMessage">
-        <ChildContent>Render fragment from Parent! Woah!</ChildContent>
-        <DangerChildContent>Danger child content</DangerChildContent>
-    </_ChildComponent>
+<CascadingValue Value="@MessageForGrandChild" Name="Message">
+    <CascadingValue Value="@luckyNumber" Name="LuckyNumber">
+        <_ChildComponent title="This title is passed as parameter from parent component"
+                         OnButtonClicked="ShowMessage">
+            <ChildContent>Render fragment from Parent! Woah!</ChildContent>
+            <DangerChildContent>Danger child content</DangerChildContent>
+        </_ChildComponent>
 
 
-    <_ChildComponent title="This is second child component"
-                    
-                     OnButtonClicked="ShowMessage">
-    </_ChildComponent>
+        <_ChildComponent title="This is second child component"
+                         OnButtonClicked="ShowMessage">
+        </_ChildComponent>
+    </CascadingValue>
 </CascadingValue>
 <br />
 <p>@_messageText</p>
@@ -25,6 +26,7 @@
 
 @code {
     string MessageForGrandChild = "this message is from your grand parent (ParentComponent)";
+    int luckyNumber = 7;
     // public Dictionary<string, object> InputAttributesFromParent { get; set; } = new Dictionary<string, object>(){
     //     { "required", "required"},
     //     { "placeholder", "Enter your name from Parent" }
