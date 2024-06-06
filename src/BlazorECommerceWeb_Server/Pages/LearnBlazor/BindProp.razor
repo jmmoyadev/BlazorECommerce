@@ -1,36 +1,51 @@
 ﻿@page "/learnblazor/bindprop"
 
+<h2>Individual Product</h2>
+<div class="row">
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product Playground</h3>
+        <hr />
+        <div class="mb-3">
+            <label class="form-label">Active</label>
+            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" @bind-value="@_product.IsActive" checked="@(_product.IsActive? "checked":null)">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label> <input class="form-control" type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind="_product.Price" @bind:event="oninput" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Properties:</label>
+            <select class="form-select" @bind="selectedProp">
+                @foreach (var prop in _product.Properties)
+                {
+                    <option value="@prop.Key">@prop.Key</option>
+                }
+            </select>
+        </div>
 
-<h3>Product</h3>
-<ul style="list-style:none; padding-left:0">
-    <li>Id: @_product.Id</li>
-    <li>Name: @_product.Name</li>
-    <li>Is Active: @_product.IsActive</li>
-    <li>Price: @_product.Price.ToString("C2")</li>
-    <li>Price <input type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind-value="_product.Price" @bind-value:event="oninput" /></li>
-    <li>Price <input type="number" placeholder="0,00" min="0.00" max="100" step=".05" @bind="_product.Price" @bind:event="oninput" /></li>
-    <li>&nbsp;</li>
-    <li>This Product is: @(_product.IsActive ? "Active" : "Inactive")</li>
-    <li>Active <input type="checkbox" @bind-value="@_product.IsActive" checked="@(_product.IsActive? "checked":null)" /></li>
-    <li>Property selected: @selectedProp</li>
-    <li>Property Value:
-        @if (!string.IsNullOrWhiteSpace(selectedProp))
-        {
-            @_product.Properties.FirstOrDefault(p => p.Key == selectedProp).Value
-        }
-    </li>
 
-</ul>
-<p>
-    Product Properties:
-    <select @bind="selectedProp">
-        @foreach (var prop in _product.Properties)
-        {
-            <option value="@prop.Key">@prop.Key</option>
-        }
-    </select>
-</p>
+    </div>
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product Summary</h3>
+        <hr />
+        <ul style="list-style:none; padding-left:0">
+            <li><label class="form-label">Id:</label> @_product.Id</li>
+            <li><label class="form-label">Name:</label> @_product.Name</li>
+            <li><label class="form-label">Is Active:</label> @_product.IsActive</li>
+            <li><label class="form-label">Price:</label> @_product.Price.ToString("C2")</li>
+            <li><label class="form-label">This Product is:</label> @(_product.IsActive ? "Active" : "Inactive")</li>
 
+            <li><label class="form-label">Property selected: @selectedProp</label></li>
+            <li>
+                Property Value:
+                @if (!string.IsNullOrWhiteSpace(selectedProp))
+                {
+                    @_product.Properties.FirstOrDefault(p => p.Key == selectedProp).Value
+                }
+            </li>
+
+        </ul>
+    </div>
+</div>
 @code {
     private string selectedProp = "";
 
