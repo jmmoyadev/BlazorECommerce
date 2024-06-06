@@ -1,5 +1,6 @@
 ﻿@page "/learnBlazor/blazorJs"
 
+
 @inject IJSRuntime _jsRuntime
 
 <h3>BlazorJs</h3>
@@ -12,7 +13,7 @@
 
 <div class="row mb-3">
     <div class="col-6">
-        <button class="btn btn-danger w-100" @onclick="ToastrFailed">Fail</button>
+        <button class="btn btn-danger w-100" @onclick="ToastrError">Fail</button>
     </div>
 </div>
 
@@ -54,11 +55,11 @@
 
     async Task ToastrSuccess()
     {
-        await _jsRuntime.InvokeVoidAsync("showToastr", "success", "Success");
+        await _jsRuntime.ToastrSuccess("Task has finished successfully!");
     }
 
-    async Task ToastrFailed()
+    async Task ToastrError()
     {
-        await _jsRuntime.InvokeVoidAsync("showToastr", "error", "Error");
+        await _jsRuntime.ToastrError("Task has failed!");
     }
 }
