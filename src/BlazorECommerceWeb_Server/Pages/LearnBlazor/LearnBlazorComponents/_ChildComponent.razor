@@ -1,0 +1,45 @@
+﻿
+<div class="mb-5">
+    <div class="alert alert-info">@Title</div>
+    <div class="alert alert-success">
+        @if (DangerChildContent != null)
+        {
+            <span>@DangerChildContent</span>
+        }
+        else
+        {
+            @if (ChildContent != null)
+            {
+                <span>@ChildContent</span>
+            }
+            else
+            {
+                <span>Empty Render Fragment!</span>
+            }
+        }
+    </div>
+
+
+
+    <button class="btn btn-danger" @onclick="OnButtonClicked">Button to be clicked</button>
+
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? DangerChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnButtonClicked { get; set; }
+
+    // private void OnButtonClick(MouseEventArgs e)
+    // {
+    //     OnButtonClicked.InvokeAsync(e);
+    // }
+}

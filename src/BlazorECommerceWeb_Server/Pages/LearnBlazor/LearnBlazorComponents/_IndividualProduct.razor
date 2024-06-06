@@ -5,6 +5,8 @@
 
         <input type="checkbox" @onchange="FavouriteUpdated" /> Add to Favorite <br /><br />
 
+        <p>RF from parent:@FirstFragment - @SecondFragment</p>
+
         Name: @Product.Name<br />
         Show properties:
         <input class="form-check-input"
@@ -38,7 +40,13 @@
     public EventCallback<bool> OnFavouriteUpdated { get; set; }
 
     [Parameter]
-    public EventCallback<string> OnSelectedProductChange { get; set; }
+    public EventCallback<string> OnSelectedProductChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment? FirstFragment { get; set; }
+
+    [Parameter]
+    public RenderFragment? SecondFragment { get; set; }
 
     #endregion
 
@@ -48,7 +56,7 @@
     }
     private async Task LastSelectedProductChange(MouseEventArgs e, string productName)
     {
-        await OnSelectedProductChange.InvokeAsync(productName);
+        await OnSelectedProductChanged.InvokeAsync(productName);
     }
 
 }
