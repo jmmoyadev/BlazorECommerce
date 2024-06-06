@@ -1,0 +1,54 @@
+﻿
+<div class="col-6 mt-2 mb-1">
+    <div class="col-12 border p-3" @onclick="((args)=>LastSelectedProductChange(args,Product.Name))">
+        <h4 class="text-secondary">Product - @Product.Id</h4>
+
+        <input type="checkbox" @onchange="FavouriteUpdated" /> Add to Favorite <br /><br />
+
+        Name: @Product.Name<br />
+        Show properties:
+        <input class="form-check-input"
+               id="checkbox_@Product.Id"
+               type="checkbox"
+               checked="@(Product.IsActive? "checked":null)"
+               @bind-value="@Product.IsActive" />
+        <br />
+        @if (Product.IsActive)
+        {
+            <ul class="mb-0 pb-0">
+                @foreach (var prodProp in Product.ProductProperties)
+                {
+                    <li>@prodProp.Key: @prodProp.Value</li>
+                }
+            </ul>
+            <br />
+            <_EditDeleteButtons IsActive="@Product.IsActive"></_EditDeleteButtons>
+        }
+    </div>
+</div>
+
+
+@code {
+    #region "Parameters"
+
+    [Parameter]
+    public Product Product { get; set; } = new Product();
+
+    [Parameter]
+    public EventCallback<bool> OnFavouriteUpdated { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnSelectedProductChange { get; set; }
+
+    #endregion
+
+    private async Task FavouriteUpdated(ChangeEventArgs e)
+    {
+        await OnFavouriteUpdated.InvokeAsync(Convert.ToBoolean(e.Value));
+    }
+    private async Task LastSelectedProductChange(MouseEventArgs e, string productName)
+    {
+        await OnSelectedProductChange.InvokeAsync(productName);
+    }
+
+}

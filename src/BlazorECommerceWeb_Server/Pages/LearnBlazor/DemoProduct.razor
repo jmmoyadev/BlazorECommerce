@@ -1,29 +1,18 @@
 ﻿@page "/learnblazor/demoproduct"
 
 <h2>Demo Product</h2>
-<div class="row border p-2 mt-2" style="background-color:azure">
+
+<p>Favourites total: @SelectedFavouriteCount</p>
+<p>Last selected product: @LastSelectedProductName</p>
+
+<div class="row border p-2 mt-2 bg-light">
     <div class="row">
         @foreach (var prod in _productLists)
         {
-            <div class="col-6 mt-2 mb-1">
-                <div class="col-12 bg-light border p-3">
-                    <h4 class="text-secondary">Product - @prod.Id</h4>
-                    Name: @prod.Name<br />
-                    Show properties:
-                    <input class="form-check-input" type="checkbox" @bind-value="@prod.IsActive" checked="@(prod.IsActive? "checked":null)">
-
-                    @if (prod.IsActive)
-                    {
-                        <ul>
-                            @foreach (var prodProp in prod.ProductProperties)
-                            {
-                                <li>@prodProp.Key: @prodProp.Value</li>
-                            }
-                        </ul>
-                    }
-
-                </div>
-            </div>
+            <_IndividualProduct Product="prod"
+                                OnFavouriteUpdated="FavouriteCountUpudate"
+                                OnSelectedProductChange="SelectedProductNameChanged">
+            </_IndividualProduct>
         }
     </div>
 </div>
@@ -32,6 +21,10 @@
 
 @code {
     List<Product> _productLists = new();
+
+    private int SelectedFavouriteCount { get; set; } = 0;
+    private string LastSelectedProductName { get; set; } = string.Empty;
+
 
     protected override void OnInitialized()
     {
@@ -56,7 +49,7 @@
 
         _productLists.Add(new()
             {
-                Id = 1,
+                Id = 2,
                 Name = "Midnight Blaze",
                 IsActive = false,
 
@@ -71,7 +64,7 @@
 
         _productLists.Add(new()
             {
-                Id = 2,
+                Id = 3,
                 Name = "Blossom Lily",
                 IsActive = true,
                 Price = 13.99m,
@@ -82,5 +75,23 @@
                     new ProductProperty { Id = 3,Key = "Color",Value = "White"}
                 }
             });
+    }
+
+
+    void FavouriteCountUpudate(bool isSelected)
+    {
+        if (isSelected)
+        {
+            SelectedFavouriteCount++;
+        }
+        else
+        {
+            SelectedFavouriteCount--;
+        }
+    }
+
+    void SelectedProductNameChanged(string productName)
+    {
+        LastSelectedProductName = productName;
     }
 }

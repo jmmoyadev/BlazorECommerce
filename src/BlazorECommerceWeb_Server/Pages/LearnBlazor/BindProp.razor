@@ -40,7 +40,7 @@
                 Property Value:
                 @if (!string.IsNullOrWhiteSpace(selectedProp))
                 {
-                    @_product.ProductProperties.FirstOrDefault(p => p.Key == selectedProp).Value
+                    @_product.ProductProperties.FirstOrDefault(p => p.Key == selectedProp)?.Value
                 }
             </li>
 
@@ -91,6 +91,7 @@
     </div>
 </div>
 
+abc
 
 
 @code {
@@ -154,7 +155,7 @@
 
         _productLists.Add(new()
             {
-                Id = 1,
+                Id = 2,
                 Name = "Midnight Blaze",
                 IsActive = false,
 
@@ -169,7 +170,7 @@
 
         _productLists.Add(new()
             {
-                Id = 2,
+                Id = 3,
                 Name = "Blossom Lily",
                 IsActive = true,
                 Price = 13.99m,
