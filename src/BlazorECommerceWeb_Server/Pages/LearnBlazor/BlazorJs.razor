@@ -6,24 +6,28 @@
 <h3>BlazorJs</h3>
 
 <div class="row mb-3">
-    <div class="col-6">
+    <div class="col-3">
         <button class="btn btn-success w-100" @onclick="ToastrSuccess">Success</button>
     </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-6">
+    <div class="col-3">
         <button class="btn btn-danger w-100" @onclick="ToastrError">Fail</button>
     </div>
 </div>
 
 <div class="row mb-3">
-    <div class="col-6">
-        <button class="btn btn-primary w-100" @onclick="TestConfirmBox">Test Confirm Button</button>
+    <div class="col-3">
+        <button class="btn btn-success w-100" @onclick="SweetAlertSuccess">SweetAlert Success</button>
+    </div>
+    <div class="col-3">
+        <button class="btn btn-danger w-100" @onclick="SweetAlertError">SweetAlert Error</button>
     </div>
 </div>
 
-
+<div class="row mb-3">
+    <div class="col-3">
+        <button class="btn btn-secondary w-100" @onclick="TestConfirmBox">Test Confirm Button</button>
+    </div>
+</div>
 
 <div class="row mb-3">
     <div class="col-6">
@@ -61,5 +65,15 @@
     async Task ToastrError()
     {
         await _jsRuntime.ToastrError("Task has failed!");
+    }
+
+    async Task SweetAlertSuccess()
+    {
+        await _jsRuntime.SwalSuccess("Task has finished successfully!");
+    }
+
+    async Task SweetAlertError()
+    {
+        await _jsRuntime.SwalError("Task has failed!");
     }
 }

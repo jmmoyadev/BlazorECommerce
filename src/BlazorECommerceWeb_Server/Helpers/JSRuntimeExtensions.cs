@@ -13,5 +13,15 @@ namespace BlazorECommerceWeb_Server.Helpers
         {
             await jsRuntime.InvokeVoidAsync("showToastr", "error", message);
         }
+
+        public static async ValueTask SwalSuccess(this IJSRuntime jsRuntime, string message)
+        {
+            await jsRuntime.InvokeVoidAsync("showSwal", "success", message);
+        }
+
+        public static async ValueTask SwalError(this IJSRuntime jsRuntime, string message)
+        {
+            await jsRuntime.InvokeVoidAsync("showSwal", "error", message);
+        }
     }
 }
