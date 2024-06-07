@@ -48,13 +48,17 @@
 
 ## Components Lifecycle
 
-1. `OnInitialized`
-2. `OnInitializedAsync`
-3. `OnParametersSet`,
-4. `OnParametersSetAsync`
-5. `OnAfterRender(firstRender)`, 
-6. `OnAfterRenderAsync(firstRender)`
-
+1. `OnInitialized` and `OnInitializedAsync`
+    - It is executed when the component is completely loaded.
+2. `OnParametersSet` and `OnParametersSetAsync`
+    - When a component is first initialized, and each time new or updated parameters are received from parent in the render tree.
+3. `OnAfterRender(bool firstRender)` and  `OnAfterRenderAsync(bool firstRender)`
+    - Called after each render of the component.
+4. `ShouldRender()`
+    - This method returns a Boolean value, if true, it refreshes the UI, otherwise changes are not sent to UI.
+5. `StateHasChanged()`
+    - This method notifise the component that its state has changed.
+    
 
 
 

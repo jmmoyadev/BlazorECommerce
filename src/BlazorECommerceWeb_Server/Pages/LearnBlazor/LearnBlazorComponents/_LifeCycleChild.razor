@@ -1,0 +1,75 @@
+﻿@inject ILogger<_LifeCycleChild> logger
+
+<h3>_LifeCycleChild</h3>
+
+<div>
+    <h4>Current count: @CountValue</h4>
+</div>
+
+<div class="mb-3">
+    <hr />
+    @foreach (var item in EventType)
+    {
+        @item
+        <hr />
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public int CountValue { get; set; }
+
+
+    List<string> EventType = new();
+
+
+
+
+    protected override void OnInitialized()
+    {
+        EventType.Add("Child - OnInitialized is called");
+        logger.LogWarning("Child - {EventName} is called", "OnInitialized");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EventType.Add("Child - OnInitializedAsync is called");
+        logger.LogWarning("Child - {EventName} is called", "OnInitializedAsync");
+        await Task.CompletedTask;
+    }
+
+    protected override void OnParametersSet()
+    {
+        EventType.Add("Child - OnParametersSet is called");
+        logger.LogWarning("Child - {EventName} is called", "OnParametersSet");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        EventType.Add("Child - OnParametersSetAsync is called");
+        logger.LogWarning("Child - {EventName} is called", "OnParametersSetAsync");
+        await Task.CompletedTask;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        EventType.Add($"Child - OnAfterRender is called. FirstRender: {firstRender}");
+        logger.LogWarning("Child - {EventName} is called. FirstRender: {FirstRender}", "OnAfterRender", firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        EventType.Add($"Child - OnAfterRenderAsync is called. FirstRender: {firstRender}");
+        logger.LogWarning("Child - {EventName} is called. FirstRender: {FirstRender}", "OnAfterRenderAsync", firstRender);
+        await Task.CompletedTask;
+    }
+
+    protected override bool ShouldRender()
+    {
+        EventType.Add($"Child - ShouldRender is called");
+        logger.LogWarning("Child - {EventName} is called.", "ShouldRender");
+        return base.ShouldRender();
+    }
+
+}

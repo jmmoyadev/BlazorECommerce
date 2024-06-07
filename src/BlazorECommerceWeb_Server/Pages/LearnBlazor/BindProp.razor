@@ -1,5 +1,5 @@
 ﻿@page "/learnblazor/bindprop"
-@inject ILogger<BindProp> Logger
+@inject ILogger<BindProp> logger
 
 <h2>Individual Product</h2>
 <div class="row mb-3">
@@ -102,37 +102,36 @@ abc
 
     protected override void OnInitialized()
     {
-        Logger.LogWarning("Calling OnInitialized");
+        logger.LogWarning("{EventName} is called", "OnInitialized");
 
         AddProducts();
         _product = _productLists.FirstOrDefault() ?? new();
     }
     protected override async Task OnInitializedAsync()
     {
-        Logger.LogWarning("Calling OnInitializedAsync");
+        logger.LogWarning("{EventName} is called", "OnInitializedAsync");
         await Task.CompletedTask;
     }
 
     protected override void OnParametersSet()
     {
-        Logger.LogWarning("Calling OnParametersSet");
+        logger.LogWarning("{EventName} is called", "OnParametersSet");
         base.OnParametersSet();
     }
     protected override async Task OnParametersSetAsync()
     {
-        Logger.LogWarning("Calling OnParametersSetAsync");
+        logger.LogWarning("{EventName} is called", "OnParametersSet");
         await Task.CompletedTask;
     }
 
     protected override void OnAfterRender(bool firstRender)
     {
-        Logger.LogWarning("Calling OnAfterRender. FirsRender: {FirsRender}", firstRender);
-        base.OnAfterRender(firstRender);
+        logger.LogWarning("{EventName} is called. FirstRender: {FirstRender}", "OnAfterRender", firstRender);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Logger.LogWarning("Calling OnAfterRenderAsync. FirsRender: {FirsRender}", firstRender);
+        logger.LogWarning("{EventName} is called. FirstRender: {FirstRender}", "OnAfterRenderAsync", firstRender); 
         await Task.CompletedTask;
     }
 
