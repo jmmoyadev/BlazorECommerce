@@ -76,7 +76,7 @@ else
         IsLoading = true;
         StateHasChanged();
 
-        await Task.Delay(2000);
+        await Task.Delay(1000); // for simulate loading
 
         var result = await _mediator.Send(new GetCategoriesList.Request());
         CategoriesList = result.Categories;
