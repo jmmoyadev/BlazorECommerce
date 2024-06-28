@@ -15,4 +15,12 @@
     <ProjectReference Include="..\BlazorECommerceWeb_Shared\BlazorECommerceWeb_Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\_DeleteConfirmation.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\_DeleteConfirmation.razor" />
+  </ItemGroup>
+
 </Project>
