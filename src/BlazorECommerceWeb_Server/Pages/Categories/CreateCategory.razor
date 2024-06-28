@@ -53,40 +53,46 @@ else
 
     private string Result = string.Empty;
 
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-
-        if (Id == 0)
+        if (firstRender)
         {
-            // create category
-            IsLoading = false;
-        }
-        else
-        {
-            IsLoading = true;
-            Title = "Edit";
-            // edit category
-            await LoadCategory();
+            if (Id == 0)
+            {
+                // create category
+                IsLoading = false;
+            }
+            else
+            {
+                Title = "Edit";
+                // edit category
+                await LoadCategory();
 
-            IsLoading = false;
+            }
         }
     }
 
     private async Task LoadCategory()
     {
-        await Task.Delay(1000);
+        IsLoading = true;
+        StateHasChanged();
+
+        await Task.Delay(1000); // for simulate loading
 
         var result = await _mediator.Send(new GetCategoryById.Request(Id));
-        
+
         if (result != null)
         {
             _currentCategory = result.Category;
         }
+
+        IsLoading = false;
+        StateHasChanged();
     }
 
     private async Task AddOrUpdateCategory()
     {
+        
         var result = await _mediator.Send(new AddOrUpdateCategory.Request() { Category = _currentCategory });
 
         _navManager.NavigateTo("/categories");
