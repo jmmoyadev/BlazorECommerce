@@ -1,0 +1,95 @@
+﻿@page "/categories/create"
+@page "/category/edit/{id:int}"
+@using BlazorECommerceWeb_Application.Modules.Categories.Commands
+
+@using BlazorECommerceWeb_Application.Modules.Categories.Queries
+@using MediatR
+
+@inject IMediator _mediator
+@inject NavigationManager _navManager;
+
+<div class="row mt-4">
+    <h3 class="text-primary mb-3 ml-3">@Title Category</h3>
+</div>
+@if (IsLoading == true)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row mt-4">
+        <div class="col-12">
+            <EditForm Model="_currentCategory" OnValidSubmit="AddOrUpdateCategory">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <div class="form-group col-6 mb-3">
+                    <label class="form-label fw-bold">Name</label>
+
+                    <InputText class="form-control" @bind-Value="_currentCategory.Name"></InputText>
+                    <ValidationMessage For="()=>_currentCategory.Name"></ValidationMessage>
+
+                </div>
+
+                <div class="form-group col-12 mb-3">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <NavLink href="categories" class="btn btn-secondary"> Cancel</NavLink>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private bool IsLoading { get; set; }
+
+    private CategoryDto _currentCategory = new();
+
+    private string Title = "Create";
+
+    private string Result = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (Id == 0)
+        {
+            // create category
+            IsLoading = false;
+        }
+        else
+        {
+            IsLoading = true;
+            Title = "Edit";
+            // edit category
+            await LoadCategory();
+
+            IsLoading = false;
+        }
+    }
+
+    private async Task LoadCategory()
+    {
+        await Task.Delay(1000);
+
+        var result = await _mediator.Send(new GetCategoryById.Request(Id));
+        
+        if (result != null)
+        {
+            _currentCategory = result.Category;
+        }
+    }
+
+    private async Task AddOrUpdateCategory()
+    {
+        var result = await _mediator.Send(new AddOrUpdateCategory.Request() { Category = _currentCategory });
+
+        _navManager.NavigateTo("/categories");
+    }
+
+}

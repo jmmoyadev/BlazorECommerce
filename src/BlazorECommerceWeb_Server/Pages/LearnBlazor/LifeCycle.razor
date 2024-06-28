@@ -95,10 +95,10 @@
 
     void StartCountdown()
     {
-        var thimer = new Timer(TimeCallback, null, 1000, 1000);
+        Timer timer = new Timer(TimeCallback, null, 1000, 1000);
     }
 
-    void TimeCallback(object state)
+    void TimeCallback(object? state)
     {
         if (Count > 0)
         {

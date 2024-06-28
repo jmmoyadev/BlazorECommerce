@@ -60,6 +60,21 @@
     - This method notifise the component that its state has changed.
     
 
+## Database
+
+When you run the application the database will be automatically created (if necessary) and the latest migrations will be applied.
+
+Running database migrations is easy. Ensure you add the following flags to your command (values assume you are executing from repository root)
+
+* `--project src/Infrastructure` (optional if in this folder)
+* `--startup-project src/Web`
+* `--output-dir Data/Migrations`
+
+For example, to add a new migration from the root folder:
+
+```
+ dotnet ef migrations add "SampleMigration" --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --output-dir Data\Migrations
+ ```
 
 
 

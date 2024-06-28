@@ -1,15 +1,25 @@
+using BlazorECommerceWeb_Application;
+using BlazorECommerceWeb_Domain;
+using BlazorECommerceWeb_Infrastructure;
+using BlazorECommerceWeb_Infrastructure.Data;
 using BlazorECommerceWeb_Server.Data;
+using BlazorECommerceWeb_Server.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Filters;
+using System;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Host.UseSerilog((hostContext, services, configuration) =>
 {
-    string[] excludedPaths = new string[] { "/css/", ".css", "/js/", ".js", "/health"};
+    string[] excludedPaths = new string[] { "/css/", ".css", "/js/", ".js", "/health" };
 
     configuration
         .ReadFrom.Configuration(builder.Configuration)
@@ -29,14 +39,31 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-var app = builder.Build();
-app.UseSerilogRequestLogging(options =>
-{
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-});
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddScoped<ApplicationDbContextInitialiser>();
+
+builder.Services.AddApplication();
+
+
+
+/******************************/
+/*           APP             */
+/*****************************/
+
+var app = builder.Build();
+
+await app.InitialiseDatabaseAsync();
+
+app.UseSerilogRequestLogging();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    
+
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
@@ -57,3 +84,4 @@ app.MapFallbackToPage("/_Host");
 
 
 app.Run();
+
