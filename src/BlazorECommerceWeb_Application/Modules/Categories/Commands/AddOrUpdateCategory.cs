@@ -40,7 +40,7 @@ public static class AddOrUpdateCategory
             var category = mapper.Map<Category>(request.Category);
 
             if (category.Id == 0)
-                await categoryRepository.Create(category);
+                await categoryRepository.Add(category);
             else
                 await categoryRepository.Update(category);
 

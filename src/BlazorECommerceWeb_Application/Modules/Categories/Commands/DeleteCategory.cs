@@ -42,7 +42,7 @@ public static class DeleteCategory
 
         public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
         {
-            await categoryRepository.Delete(request.CategoryId);
+            await categoryRepository.DeleteById(request.CategoryId);
 
             return Unit.Value;
 

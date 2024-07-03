@@ -5,10 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorECommerceWeb_Domain.Entities;
-
-public class Category: EntityBase<Category>
+public class EntityBase<T> where T : EntityBase<T>
 {
-    public string Name { get; set; } = string.Empty;
-    public DateTime CreatedDate { get; set; }
-
+    public virtual int Id { get; set; }
 }
