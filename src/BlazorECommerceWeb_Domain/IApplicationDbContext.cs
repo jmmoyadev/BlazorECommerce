@@ -10,4 +10,6 @@ namespace BlazorECommerceWeb_Domain;
 public interface IApplicationDbContext
 {
     DbSet<Category> Categories { get; }
+
+    DbSet<Product> Products { get; }
 }

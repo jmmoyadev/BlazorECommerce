@@ -10,5 +10,6 @@ public class Category: EntityBase<Category>
 {
     public string Name { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
+    public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 
 }
