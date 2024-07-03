@@ -70,11 +70,22 @@ Running database migrations is easy. Ensure you add the following flags to your 
 * `--startup-project src/Web`
 * `--output-dir Data/Migrations`
 
-For example, to add a new migration from the root folder:
+### Add Migration
+`
+dotnet ef migrations add "SampleMigration" --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --output-dir Data\Migrations
+`
 
-```
- dotnet ef migrations add "SampleMigration" --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --output-dir Data\Migrations
- ```
+ ### Update database
+`
+dotnet ef database update "SampleMigration" --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server
+`
+
+### Remove Migration
+`
+dotnet ef migrations remove --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --context ApplicationDbContex
+`
+
+Review the [Entity Framework Core tools reference - .NET Core CLI | Microsoft Docs](https://learn.microsoft.com/en-us/ef/core/cli/dotnet) to learn more.
 
 
 
