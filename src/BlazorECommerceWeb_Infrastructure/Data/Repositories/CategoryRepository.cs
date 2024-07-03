@@ -8,63 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorECommerceWeb_Infrastructure.Data.Repositories;
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
-    private readonly ApplicationDbContext _context;
-    private DbSet<Category> _dbSet;
-
-    public CategoryRepository(ApplicationDbContext context)
-    {
-        _context = context;
-        _dbSet = _context.Set<Category>();
-    }
-
-
-    public async Task<Category> Create(Category category)
+    public CategoryRepository(IDbContextFactory<ApplicationDbContext> factory) : base(factory)
     {
 
-        _dbSet.Add(category);
-        await _context.SaveChangesAsync();
-
-        return category;
     }
-
-    public async Task<Category> Update(Category category)
-    {
-        var entity = _dbSet.Where(p => p.Id == category.Id).SingleOrDefault();
-        
-        if (entity != null)
-        {
-            entity.Name = category.Name;
-
-            _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        return category;
-    }
-
-    public async Task<int> Delete(int id)
-    {
-        var entity = _dbSet.Where(p => p.Id == id).SingleOrDefault();
-        if (entity != null)
-        {
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        return 0;
-    }
-
-    public async Task<Category?> Get(int id)
-    {
-        return await _dbSet.SingleOrDefaultAsync(p => p.Id == id);
-    }
-
-    public async Task<IEnumerable<Category>> GetAll()
-    {
-        return await _dbSet.ToListAsync();
-    }
-
-
 }

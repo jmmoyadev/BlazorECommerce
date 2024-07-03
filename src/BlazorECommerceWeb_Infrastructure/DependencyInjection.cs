@@ -12,15 +12,13 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
-        {
-            options.UseSqlServer(connectionString);
-        });
-              
+
+        services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        
 
         return services;
     }
