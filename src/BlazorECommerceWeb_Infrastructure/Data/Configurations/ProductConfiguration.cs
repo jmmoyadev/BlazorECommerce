@@ -21,7 +21,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.ImageUrl).HasMaxLength(2000);
         builder.Property(p => p.Color).HasMaxLength(50);
 
-        builder.HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryId);
+        builder.HasOne(p => p.Category).WithMany(p=>p.Products).HasForeignKey(p => p.CategoryId);
+        builder.Navigation(p => p.Category).AutoInclude();
 
 
     }

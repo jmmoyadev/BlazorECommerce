@@ -18,8 +18,8 @@ namespace BlazorECommerceWeb_Infrastructure.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShopFavorites = table.Column<bool>(type: "bit", nullable: false),
                     CustomerFavorites = table.Column<bool>(type: "bit", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

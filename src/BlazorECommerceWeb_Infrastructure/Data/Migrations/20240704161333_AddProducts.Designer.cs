@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerceWeb_Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240703151454_AddProducts")]
+    [Migration("20240704161333_AddProducts")]
     partial class AddProducts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,7 +57,6 @@ namespace BlazorECommerceWeb_Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -69,7 +68,6 @@ namespace BlazorECommerceWeb_Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
