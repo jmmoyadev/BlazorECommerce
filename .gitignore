@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/src/BlazorECommerceWeb_Server/wwwroot/upload/images/products

@@ -5,6 +5,7 @@
 
 @inject IJSRuntime _jsRuntime
 @inject IMediator _mediator
+@inject IFileUpload _fileUpload
 
 <_DeleteConfirmation ConfirmationChanged="ConfirmDelete_Click" IsParentComponentProcessing="IsLoading"></_DeleteConfirmation>
 
@@ -68,6 +69,7 @@ else
     private bool IsLoading { get; set; }
 
     private int DeleteProductId { get; set; }
+    private string? OldImageUrl { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -102,8 +104,13 @@ else
         IsLoading = true;
         if (isConfirmed && DeleteProductId != 0)
         {
+            var response = await _mediator.Send(new GetProductById.Request(DeleteProductId));
+            OldImageUrl = response.Product.ImageUrl;
 
             await _mediator.Send(new DeleteProduct.Request(DeleteProductId));
+
+            if (!string.IsNullOrWhiteSpace(OldImageUrl))
+                await _fileUpload.DeleteFile(OldImageUrl);
 
             await LoadProducts();
 

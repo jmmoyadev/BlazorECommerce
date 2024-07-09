@@ -7,7 +7,9 @@
 @using MediatR
 
 @inject IMediator _mediator
-@inject NavigationManager _navManager;
+@inject IFileUpload _fileUpload
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
 
 <div class="row mt-4">
     <h3 class="text-primary mb-3 ml-3">@Title Product</h3>
@@ -68,6 +70,21 @@ else
                     </div>
                 </div>
 
+                <div class="form-group col-12 col-lg-6 mb-3">
+                    <InputFile OnChange="HandleImageUpload"></InputFile>
+                </div>
+
+                <div class="mb-3">
+                    @if (!string.IsNullOrEmpty(_currentProduct.ImageUrl))
+                    {
+                        <img src="@_currentProduct.ImageUrl" width="200" />
+                    }
+                    else
+                    {
+                        <img src="img/no-image.png" width="200" />
+                    }
+                </div>
+
                 <div class="form-group col-12 mb-3">
                     <button class="btn btn-primary" type="submit">Save</button>
                     <NavLink href="products" class="btn btn-secondary">Cancel</NavLink>
@@ -87,6 +104,8 @@ else
     private bool IsLoading { get; set; }
 
     private ProductDto _currentProduct = new();
+
+    private string? _oldImageUrl;
 
     private IEnumerable<CategoryDto> CategoriesList { get; set; } = Enumerable.Empty<CategoryDto>();
 
@@ -118,6 +137,7 @@ else
             if (result != null)
             {
                 _currentProduct = result.Product;
+                _oldImageUrl = result.Product.ImageUrl;
             }
         }
 
@@ -141,10 +161,52 @@ else
 
     private async Task AddOrUpdateProduct()
     {
+        if (!string.IsNullOrWhiteSpace(_oldImageUrl) && _oldImageUrl != _currentProduct.ImageUrl)
+        {
+            await _fileUpload.DeleteFile(_oldImageUrl);
+        }
 
         var result = await _mediator.Send(new AddOrUpdateProduct.Request() { Product = _currentProduct });
+        
+        if (result.Success)
+            await _jsRuntime.ToastrSuccess(result.Message);
+        else
+            await _jsRuntime.ToastrError(result.Message);
 
         _navManager.NavigateTo("/products");
+    }
+
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    {
+        string[] validExtensions = new string[] { ".jpg", ".png", ".jpeg" };
+
+        IsLoading = true;
+        try
+        {
+            if (e.GetMultipleFiles().Count > 0)
+            {
+                foreach (var file in e.GetMultipleFiles())
+                {
+                    FileInfo fileInfo = new FileInfo(file.Name);
+
+                    if (validExtensions.Contains(fileInfo.Extension.ToLower()))
+                    {
+                        _currentProduct.ImageUrl = await _fileUpload.UploadFile(file);
+                    }
+                    else
+                    {
+                        await _jsRuntime.ToastrError("Please select .jpg/.jpeg/.png file only");
+                        return;
+                    }
+
+                }
+            }
+            IsLoading = false;
+        }
+        catch (Exception ex)
+        {
+            await _jsRuntime.ToastrError(ex.Message);
+        }
     }
 
 }

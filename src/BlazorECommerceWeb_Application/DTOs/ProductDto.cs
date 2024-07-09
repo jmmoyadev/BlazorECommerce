@@ -20,7 +20,7 @@ public class ProductDto
     public bool ShopFavorites { get; set; }
     public bool CustomerFavorites { get; set; }
     public string? Color { get; set; } = null;
-    public string? ImageUrl { get; set; } = null;
+    public string? ImageUrl { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Please select a category")]
     public int CategoryId { get; set; }
