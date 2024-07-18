@@ -1,5 +1,5 @@
 ﻿@page "/learnBlazor/parentComponent"
-
+ @inject ILogger<ParentComponent> logger
 
 <h3>Parent/Child Relation</h3>
 
@@ -14,7 +14,7 @@
 
 
         <_ChildComponent title="This is second child component"
-                         OnButtonClicked="ShowMessage">
+                         OnButtonClicked="ShowMessage1">
         </_ChildComponent>
     </CascadingValue>
 </CascadingValue>
@@ -46,9 +46,14 @@
 
     void ShowMessage()
     {
-        _messageText = "Button clicked from Child Component";
+        _messageText = "First button clicked!";
+        logger.LogInformation(_messageText);
     }
 
-
+    void ShowMessage1()
+    {
+        _messageText = "Second button clicked!";
+        logger.LogInformation(_messageText);
+    }
 
 }
