@@ -89,3 +89,51 @@ Review the [Entity Framework Core tools reference - .NET Core CLI | Microsoft Do
 
 
 
+# Add Radzen Blazor Components
+
+1. Install
+
+    The Radzen Blazor components are distributed via the Radzen.Blazor nuget package.
+
+    You can add the Radzen.Blazor nuget package to your Blazor application in one of the following ways:
+
+    Via Visual Studio's Nuget Package Manager.
+    Via command line `dotnet add package Radzen.Blazor`
+    By editing your application's .csproj file and adding a package reference 
+    `<PackageReference Include="Radzen.Blazor" Version="*" />`
+
+2. Import the namespace
+
+    Open the _Imports.razor file of your Blazor application and append the following:
+
+    ```
+    @using Radzen
+    @using Radzen.Blazor
+    ```
+
+3. Set the theme
+
+    Add this code within the head of the _Layout.cshtml
+    ```
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/material-base.css">
+    ```
+
+4. Include Radzen.Blazor.js
+
+    ```
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+    ```
+
+5. Use Dialog, Notification, ContextMenu and Tooltip components
+
+
+    Open the `MainLayout.razor` file and include:
+
+    ```
+    <RadzenComponents @rendermode="InteractiveAuto" />
+    ```
+    
+    Open the `Program.cs` file and include: 
+    ```
+    builder.Services.AddRadzenComponents();
+    ```

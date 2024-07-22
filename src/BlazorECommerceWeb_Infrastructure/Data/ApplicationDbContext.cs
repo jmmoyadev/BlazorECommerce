@@ -17,9 +17,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Category> Categories { get; }
 
+    public DbSet<Product> Products { get; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        base.OnModelCreating(builder);
     }
 }

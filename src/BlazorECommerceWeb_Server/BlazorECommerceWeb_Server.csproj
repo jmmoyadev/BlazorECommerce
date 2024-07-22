@@ -6,6 +6,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Radzen.Blazor" />
     <PackageReference Include="Serilog.AspNetCore" />
   </ItemGroup>
 
@@ -21,6 +22,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Shared\_DeleteConfirmation.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\upload\images\products\" />
   </ItemGroup>
 
 </Project>

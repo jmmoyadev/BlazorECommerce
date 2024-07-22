@@ -1,7 +1,7 @@
 ﻿@page "/categories/create"
-@page "/category/edit/{id:int}"
-@using BlazorECommerceWeb_Application.Modules.Categories.Commands
+@page "/categories/edit/{id:int}"
 
+@using BlazorECommerceWeb_Application.Modules.Categories.Commands
 @using BlazorECommerceWeb_Application.Modules.Categories.Queries
 @using MediatR
 
@@ -30,8 +30,8 @@ else
                 </div>
 
                 <div class="form-group col-12 mb-3">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <NavLink href="categories" class="btn btn-secondary"> Cancel</NavLink>
+                    <RadzenButton ButtonType="Radzen.ButtonType.Submit" ButtonStyle="Radzen.ButtonStyle.Primary" Text="Save"></RadzenButton>
+                    <RadzenButton ButtonType="Radzen.ButtonType.Reset" ButtonStyle="Radzen.ButtonStyle.Light" Text="Cancel" Click="@(()=>_navManager.NavigateTo("/categories"))"></RadzenButton>
                 </div>
             </EditForm>
         </div>
@@ -92,7 +92,7 @@ else
 
     private async Task AddOrUpdateCategory()
     {
-        
+
         var result = await _mediator.Send(new AddOrUpdateCategory.Request() { Category = _currentCategory });
 
         _navManager.NavigateTo("/categories");

@@ -8,9 +8,5 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorECommerceWeb_Domain\BlazorECommerceWeb_Domain.csproj" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
 
 </Project>
