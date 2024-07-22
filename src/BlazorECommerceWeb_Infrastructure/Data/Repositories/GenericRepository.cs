@@ -37,13 +37,7 @@ public class GenericRepository<T> : IRepository<T> where T : EntityBase<T>
     public virtual async Task<int> DeleteById(int id)
     {
         using var context = await _factory.CreateDbContextAsync();
-        var entity = await context.Set<T>().FindAsync(id);
-        if (entity != null)
-        {
-            context.Remove(entity);
-            return await context.SaveChangesAsync();
-        }
-        return 0;
+        return await context.Set<T>().Where(x => x.Id == id).ExecuteDeleteAsync();
     }
 
     public virtual async Task<T?> Get(int id)
