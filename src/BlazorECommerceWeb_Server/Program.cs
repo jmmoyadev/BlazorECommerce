@@ -45,6 +45,8 @@ builder.Services.AddApplication();
 
 builder.Services.AddWebApplication();
 
+builder.Services.AddRadzenBlazorServices();
+
 
 /******************************/
 /*           APP             */
