@@ -82,7 +82,7 @@ dotnet ef database update "SampleMigration" --project src\BlazorECommerceWeb_Inf
 
 ### Remove Migration
 `
-dotnet ef migrations remove --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --context ApplicationDbContex
+dotnet ef migrations remove --project src\BlazorECommerceWeb_Infrastructure --startup-project src\BlazorECommerceWeb_Server --context ApplicationDbContext
 `
 
 Review the [Entity Framework Core tools reference - .NET Core CLI | Microsoft Docs](https://learn.microsoft.com/en-us/ef/core/cli/dotnet) to learn more.
@@ -125,14 +125,7 @@ Review the [Entity Framework Core tools reference - .NET Core CLI | Microsoft Do
     ```
 
 5. Use Dialog, Notification, ContextMenu and Tooltip components
-
-
-    Open the `MainLayout.razor` file and include:
-
-    ```csharp
-    <RadzenComponents @rendermode="InteractiveAuto" />
-    ```
-    
+  
     Open the `Program.cs` file and include: 
     ```csharp
     builder.Services.AddRadzenComponents();
