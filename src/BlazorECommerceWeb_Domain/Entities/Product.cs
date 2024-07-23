@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorECommerceWeb_Domain.Entities;
-public class Product: EntityBase<Product>
+
+public class Product : EntityBase<Product>
 {
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
@@ -16,4 +17,6 @@ public class Product: EntityBase<Product>
 
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
+
+    public ICollection<ProductPrice> ProductPrices { get; set; }
 }

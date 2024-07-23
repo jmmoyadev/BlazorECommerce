@@ -1,12 +1,13 @@
 ﻿using BlazorECommerceWeb_Domain;
+using BlazorECommerceWeb_Domain.Repositories;
+using BlazorECommerceWeb_Infrastructure.Data;
+using BlazorECommerceWeb_Infrastructure.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using BlazorECommerceWeb_Infrastructure.Data;
-using BlazorECommerceWeb_Domain.Repositories;
-using BlazorECommerceWeb_Infrastructure.Data.Repositories;
 
 namespace BlazorECommerceWeb_Infrastructure;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
@@ -19,9 +20,8 @@ public static class DependencyInjection
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
-
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;
     }
-
 }
