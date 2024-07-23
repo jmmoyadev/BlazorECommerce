@@ -1,10 +1,9 @@
 ﻿using BlazorECommerceWeb_Domain;
-using BlazorECommerceWeb_Domain.Repositories;
 using BlazorECommerceWeb_Infrastructure.Data;
-using BlazorECommerceWeb_Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
 
 namespace BlazorECommerceWeb_Infrastructure;
 
@@ -18,9 +17,14 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<IProductRepository, ProductRepository>();
+        services.Scan(scan => scan
+                .FromAssemblies(typeof(ApplicationDbContext).Assembly)
+                .AddClasses(
+                    filter => filter.Where(x => x.Name.EndsWith("Repository")),
+                    publicOnly: true)
+                .UsingRegistrationStrategy(RegistrationStrategy.Throw)
+                .AsMatchingInterface()
+                .WithScopedLifetime());
 
         return services;
     }
